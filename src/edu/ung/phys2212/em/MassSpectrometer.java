@@ -14,6 +14,7 @@ public class MassSpectrometer extends PApplet {
 	VelocitySelector vSelector;
 	UniformMagField magField;
 	Particle part;
+	double initialVelocity;
 	
 	
 	public void settings() {
@@ -22,14 +23,15 @@ public class MassSpectrometer extends PApplet {
 	
 	
 	public void setup() {
-		// get from command line:
-		double eField = -2.3;
-		double bField1 = 0.022857;
-		double bField2 = 1.75;
-		int pid = 0;
-		// ^^ get from command line ^^
+		String[] txtFileLines = loadStrings("data.txt");
+		int pid = Integer.parseInt(txtFileLines[0]);
+		double eField = Double.parseDouble(txtFileLines[1]);
+		double bField1 = Double.parseDouble(txtFileLines[2]);
+		double bField2 = Double.parseDouble(txtFileLines[3]);
 		
-		double initialVelocity = -200;
+		if(pid == 2) initialVelocity = -170;
+		else if(pid == 1) initialVelocity = -185;
+		else initialVelocity = -200;
 		vSelector = new VelocitySelector(this, eField, bField1);
 		magField = new UniformMagField(this, bField2);
 		part = new Particle(this, ParticleType.values()[pid], width/2, height, 0, initialVelocity);
@@ -77,6 +79,9 @@ public class MassSpectrometer extends PApplet {
 		double ay = fy/mass;
 		
 		part.update(part.x + part.vx*dt, part.y + part.vy*dt, part.vx + ax*dt, part.vy + ay*dt);
+		if(part.x < 0 || part. y < 0 || part.x > width || part.y > height) {
+			part.update(width/2, height, 0, initialVelocity);
+		}
 	}
 
 }

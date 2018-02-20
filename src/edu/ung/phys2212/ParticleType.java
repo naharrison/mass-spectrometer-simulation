@@ -2,7 +2,7 @@ package edu.ung.phys2212;
 
 public enum ParticleType {
 	
-	AE(0, -1.5, 3.0, "ae.PNG"), IN(1, 2.75, 0.25, "in.PNG"), NH(2, -2.5, 0.5, "nh2.jpg");
+	AE(0, -1.5, 1.0, "figs/ae.PNG"), IN(1, 2.0, 0.5, "figs/in.PNG"), NH(2, -1.75, 0.75, "figs/nh2.jpg");
 	
 	private int id;
 	private double charge, mass;

@@ -54,14 +54,14 @@ public class LevitatingWire extends PApplet {
 		double dRight = Math.sqrt(Math.pow(floatingWire.x - baseWireRight.x, 2) + Math.pow(floatingWire.y - baseWireRight.y, 2));
 		dRight = dRight/1000.0;
 
-		double thetaLeft = Math.atan2(baseWireLeft.y - floatingWire.y, floatingWire.x - baseWireLeft.x);
+		double thetaLeft = Math.PI - Math.atan2(baseWireLeft.y - floatingWire.y, baseWireLeft.x - floatingWire.x);
 		double thetaRight = Math.atan2(baseWireRight.y - floatingWire.y, baseWireRight.x - floatingWire.x);
 		
-		double fLeft = -1.0*(mu*baseWireLeft.current*floatingWire.current*floatingWire.length)/(2.0*Math.PI*dLeft);
-		double fRight = -1.0*(mu*baseWireRight.current*floatingWire.current*floatingWire.length)/(2.0*Math.PI*dRight);
+		double fLeft = Math.abs((mu*baseWireLeft.current*floatingWire.current*floatingWire.length)/(2.0*Math.PI*dLeft));
+		double fRight = Math.abs((mu*baseWireRight.current*floatingWire.current*floatingWire.length)/(2.0*Math.PI*dRight));
 
 		double fx = fLeft*Math.cos(thetaLeft) - fRight*Math.cos(thetaRight);
-		double fy = -1.0* fLeft*Math.sin(thetaLeft) - fRight*Math.sin(thetaRight) + 9.8*floatingWire.mass;
+		double fy = -1.0*fLeft*Math.sin(thetaLeft) - fRight*Math.sin(thetaRight) + 9.8*floatingWire.mass;
 		
 		double ax = fx/floatingWire.mass;
 		double ay = fy/floatingWire.mass;
@@ -71,11 +71,11 @@ public class LevitatingWire extends PApplet {
 		vx += ax*dt;
 		vy += ay*dt;
 
-		//System.out.println(dLeft + " " + dRight);
+		//System.out.println(dLeft + " " + dRight); // correct
 		//System.out.println(fLeft*Math.cos(thetaLeft) + " " + fRight*Math.cos(thetaRight) + " " + fLeft*Math.sin(thetaLeft) + " " + fRight*Math.sin(thetaRight));
 		//System.out.println(fx + " " + fy + " " + 9.8*floatingWire.mass);
 		//System.out.println(fy + " " + ay + " " + vy + " " + floatingWire.y);
-		//System.out.println(thetaLeft + " " + thetaRight);
+		//System.out.println(Math.toDegrees(thetaLeft) + " " + Math.toDegrees(thetaRight));
 	}
 
 }
